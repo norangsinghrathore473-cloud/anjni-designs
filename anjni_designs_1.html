@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anjni by Geetika Singhal — Custom Fashion, Ram Ganga Vihar Moradabad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E0D0C; --bg-soft:#161412; --ivory:#F3EEE5; --ivory-dim:#B8AFA2;
+    --gold:#C9A24B; --gold-soft:#E3C583; --line: rgba(243,238,229,0.12);
+    --light-bg:#F3EEE5; --light-ink:#17140F;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--bg); color:var(--ivory); font-family:'Manrope',sans-serif; font-weight:300; line-height:1.7; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  h1,h2,h3{ font-family:'Fraunces',serif; font-weight:400; }
+  a{ color:inherit; text-decoration:none; }
+  img{ width:100%; display:block; object-fit:cover; }
+  .wrap{ max-width:1280px; margin:0 auto; padding:0 48px; }
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  nav{ position:sticky; top:0; z-index:100; background:rgba(14,13,12,.88); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:20px 48px; }
+  .logo{ display:flex; align-items:center; gap:12px; }
+  .logo .mono{ width:38px; height:38px; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-size:17px; color:var(--gold); }
+  .logo .name{ font-size:15px; letter-spacing:.18em; font-weight:600; }
+  .logo .sub{ font-size:9.5px; letter-spacing:.28em; color:var(--gold); margin-top:2px; }
+  .navlinks{ display:flex; gap:40px; font-size:13.5px; color:var(--ivory-dim); }
+  .navlinks a:hover{ color:var(--ivory); }
+  .nav-actions{ display:flex; align-items:center; gap:22px; font-size:13.5px; }
+  .nav-actions .call{ display:flex; align-items:center; gap:8px; color:var(--ivory-dim); }
+  .nav-actions .wa{ background:var(--gold); color:#17140F; padding:10px 20px; border-radius:2px; font-weight:600; display:flex; align-items:center; gap:8px; transition:.3s ease; }
+  .nav-actions .wa:hover{ background:var(--gold-soft); }
+
+  .hero{ min-height:92vh; display:flex; align-items:center; padding:80px 0 60px; position:relative; }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(201,162,75,0.08), transparent 60%);
+  }
+  .hero-inner{ position:relative; z-index:2; max-width:820px; }
+  .eyebrow{ display:flex; align-items:center; gap:12px; font-size:12px; letter-spacing:.22em; color:var(--gold); margin-bottom:30px; }
+  .eyebrow::before{ content:""; width:34px; height:1px; background:var(--gold); }
+  .hero h1{ font-size:clamp(40px,6.4vw,84px); line-height:1.04; font-weight:400; letter-spacing:-.01em; }
+  .hero h1 em{ font-style:italic; color:var(--gold-soft); font-weight:400; }
+  .hero p{ color:var(--ivory-dim); font-size:17px; max-width:46ch; margin-top:28px; line-height:1.75; }
+  .cta-row{ display:flex; gap:16px; margin-top:44px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:10px; padding:16px 30px; font-size:13.5px; letter-spacing:.04em; border-radius:2px; transition:.3s ease; cursor:pointer; }
+  .btn.gold{ background:var(--gold); color:#17140F; font-weight:600; }
+  .btn.gold:hover{ background:var(--gold-soft); transform:translateY(-2px); }
+  .btn.ghost{ border:1px solid var(--line); color:var(--ivory-dim); }
+  .btn.ghost:hover{ border-color:var(--gold); color:var(--gold-soft); }
+
+  /* collection section - light bg switch */
+  .section{ padding:110px 0; }
+  .collection-sec{ background:var(--light-bg); color:var(--light-ink); }
+  .col-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:50px; flex-wrap:wrap; gap:24px; }
+  .col-head .kicker{ font-size:11.5px; letter-spacing:.2em; color:#8a7a55; }
+  .col-head h2{ font-size:clamp(38px,5.2vw,64px); margin-top:10px; color:var(--light-ink); font-weight:400; }
+  .col-head .desc{ max-width:32ch; font-family:'Fraunces',serif; font-style:italic; font-size:16px; color:#5c5347; text-align:right; }
+
+  .filters{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:50px; }
+  .filter{ padding:10px 22px; border:1px solid rgba(23,20,15,.18); border-radius:30px; font-size:12.5px; letter-spacing:.06em; color:#5c5347; cursor:pointer; transition:.25s ease; }
+  .filter.active{ background:var(--light-ink); color:var(--light-bg); border-color:var(--light-ink); }
+  .filter:hover:not(.active){ border-color:var(--light-ink); }
+
+  .masonry{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .mcard{ position:relative; overflow:hidden; border-radius:2px; }
+  .mcard img{ transition:transform .7s ease; }
+  .mcard:hover img{ transform:scale(1.06); }
+  .mcard .tag{ position:absolute; top:16px; left:16px; font-size:10px; letter-spacing:.14em; color:#fff; background:rgba(23,20,15,.55); padding:5px 10px; z-index:2; backdrop-filter:blur(4px); }
+  .mcard .meta{ position:absolute; bottom:0; left:0; right:0; padding:20px; background:linear-gradient(transparent, rgba(0,0,0,.65)); color:#fff; }
+  .mcard .meta h3{ font-size:19px; font-weight:400; }
+  .mcard.tall{ aspect-ratio:3/4.4; }
+  .mcard.short{ aspect-ratio:3/3.6; }
+
+  /* quote section */
+  .quote-sec{ padding:130px 0; }
+  .quote-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+  .quote-tag{ font-size:11.5px; letter-spacing:.22em; color:var(--gold); margin-bottom:24px; }
+  blockquote{ font-family:'Fraunces',serif; font-style:italic; font-size:clamp(26px,3.2vw,40px); line-height:1.35; color:var(--ivory); }
+  .quote-side{ border-left:1px solid var(--line); padding-left:36px; color:var(--ivory-dim); font-size:15.5px; line-height:1.85; }
+
+  /* visit section */
+  .visit-sec{ padding:0 0 0; }
+  .visit-grid{ display:grid; grid-template-columns:1fr 1fr; min-height:600px; }
+  .visit-photo{ position:relative; overflow:hidden; }
+  .visit-photo::after{ content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(14,13,12,0) 50%, rgba(14,13,12,.9)); }
+  .visit-photo .tag{ position:absolute; bottom:24px; left:24px; z-index:2; font-size:12px; letter-spacing:.08em; color:var(--gold-soft); }
+  .visit-copy{ display:flex; flex-direction:column; justify-content:center; padding:80px; }
+  .visit-copy .eyebrow{ margin-bottom:24px; }
+  .visit-copy h2{ font-size:clamp(34px,4.4vw,54px); line-height:1.08; }
+  .visit-copy h2 em{ font-style:italic; color:var(--gold-soft); }
+  .visit-copy p{ color:var(--ivory-dim); font-size:16px; max-width:44ch; margin-top:22px; }
+  .visit-details{ margin-top:40px; border-top:1px solid var(--line); padding-top:32px; display:flex; gap:50px; flex-wrap:wrap; }
+  .vd h4{ font-size:13px; color:var(--gold); letter-spacing:.06em; margin-bottom:8px; font-weight:600; }
+  .vd p{ font-size:14.5px; color:var(--ivory-dim); margin:0; }
+  .visit-details .cta-row{ margin-top:36px; width:100%; }
+
+  .map-wrap{ height:420px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); position:relative; }
+  .map-wrap iframe{ width:100%; height:100%; border:0; filter:grayscale(.3) contrast(1.05); }
+  .map-open{ position:absolute; top:20px; left:20px; background:var(--bg); border:1px solid var(--line); color:var(--ivory); padding:10px 18px; font-size:12.5px; letter-spacing:.04em; border-radius:2px; z-index:5; display:flex; align-items:center; gap:8px; }
+
+  footer{ padding:60px 0 30px; }
+  .foot-top{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px; padding-bottom:40px; }
+  .foot-brand{ display:flex; align-items:center; gap:14px; }
+  .foot-tagline{ font-family:'Fraunces',serif; font-style:italic; color:var(--ivory-dim); font-size:15px; }
+  .foot-social{ display:flex; gap:24px; font-size:13px; color:var(--ivory-dim); }
+  .foot-bottom{ border-top:1px solid var(--line); padding-top:24px; display:flex; justify-content:space-between; font-size:12px; color:#6b6459; flex-wrap:wrap; gap:10px; }
+
+  @media(max-width:900px){
+    .wrap{ padding:0 24px; }
+    nav .wrap{ padding:16px 24px; }
+    .navlinks{ display:none; }
+    .masonry{ grid-template-columns:1fr 1fr; }
+    .mcard.tall, .mcard.short{ aspect-ratio:3/4; }
+    .quote-grid{ grid-template-columns:1fr; gap:30px; }
+    .quote-side{ border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:24px; }
+    .visit-grid{ grid-template-columns:1fr; }
+    .visit-photo{ min-height:320px; }
+    .visit-copy{ padding:50px 24px; }
+    .col-head{ flex-direction:column; align-items:flex-start; }
+    .col-head .desc{ text-align:left; }
+  }
+  @media(max-width:520px){
+    .hero{ min-height:auto; padding:60px 0 50px; }
+    .hero-inner{ padding:0 4px; }
+    .cta-row{ flex-direction:column; align-items:stretch; }
+    .section{ padding:64px 0; }
+    .masonry{ grid-template-columns:1fr; gap:16px; }
+    .quote-sec{ padding:70px 0; }
+    .nav-actions .call{ display:none; }
+    .visit-details{ gap:26px; }
+    .foot-top{ flex-direction:column; align-items:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">
+      <div class="mono">A</div>
+      <div>
+        <div class="name">ANJNI</div>
+        <div class="sub">BY GEETIKA SINGHAL</div>
+      </div>
+    </div>
+    <div class="navlinks">
+      <a href="#collection">Collections</a>
+      <a href="#story">Our Story</a>
+      <a href="#visit">Visit Us</a>
+    </div>
+    <div class="nav-actions">
+      <a class="call" href="tel:+919897167671">📞 Call us</a>
+      <a class="wa" href="https://wa.me/919897167671?text=Namaste%2C%20mujhe%20outfit%20design%20karwana%20hai" target="_blank">WhatsApp ↗</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner">
+      <div class="eyebrow">RAM GANGA VIHAR · MORADABAD</div>
+      <h1>Designs that <em>fit</em> your story.</h1>
+      <p>Custom outfits, tailored to your body, your budget, and your occasion. 4.9★ rated by 33 Moradabad families over a decade.</p>
+      <div class="cta-row">
+        <a class="btn gold" href="#collection">Explore the collection ↗</a>
+        <a class="btn ghost" href="#story">Discover our story ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section collection-sec" id="collection">
+  <div class="wrap">
+    <div class="col-head reveal">
+      <div>
+        <div class="kicker">CURATED FOR YOU</div>
+        <h2>The collection</h2>
+      </div>
+      <div class="desc">Discover pieces made to be worn now, and treasured forever.</div>
+    </div>
+    <div class="filters reveal">
+      <div class="filter active">All Pieces</div>
+      <div class="filter">Bridal Wear</div>
+      <div class="filter">Indo-Western</div>
+      <div class="filter">Sarees</div>
+      <div class="filter">Custom Tailoring</div>
+      <div class="filter">Family Functions</div>
+    </div>
+    <div class="masonry reveal">
+      <div class="mcard tall">
+        <span class="tag">BRIDAL</span>
+        <img src="https://images.unsplash.com/photo-1610047614256-023d7c028d0b?w=700&q=80" alt="Bridal wear outfit">
+        <div class="meta"><h3>Bridal Lehenga Edit</h3></div>
+      </div>
+      <div class="mcard short">
+        <span class="tag">SAREE</span>
+        <img src="https://images.unsplash.com/photo-1619516388835-2b60acc4049e?w=700&q=80" alt="Traditional saree">
+        <div class="meta"><h3>Classic Silk Sarees</h3></div>
+      </div>
+      <div class="mcard tall">
+        <span class="tag">FAMILY FUNCTION</span>
+        <img src="https://images.unsplash.com/photo-1706943262454-84ee74854346?w=700&q=80" alt="Festive wear">
+        <div class="meta"><h3>Sangeet & Mehendi Wear</h3></div>
+      </div>
+      <div class="mcard short">
+        <span class="tag">INDO-WESTERN</span>
+        <img src="https://images.unsplash.com/photo-1610202631408-fa6ba0f39ca3?w=700&q=80" alt="Indo-western outfit">
+        <div class="meta"><h3>Fusion Edit</h3></div>
+      </div>
+      <div class="mcard tall">
+        <span class="tag">CUSTOM</span>
+        <img src="https://images.unsplash.com/photo-1616583936499-d4116e7e2e76?w=700&q=80" alt="Custom tailored outfit">
+        <div class="meta"><h3>Made-to-Measure</h3></div>
+      </div>
+      <div class="mcard short">
+        <span class="tag">FAMILY FUNCTION</span>
+        <img src="https://images.unsplash.com/photo-1610047614222-d33c39abfab2?w=700&q=80" alt="Occasion wear">
+        <div class="meta"><h3>Occasion Wear Edit</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-sec" id="story">
+  <div class="wrap">
+    <div class="quote-grid reveal">
+      <div>
+        <div class="quote-tag">A LITTLE MORE PERSONAL</div>
+        <blockquote>"A well-fitted outfit doesn't just look good. It makes you feel like yourself."</blockquote>
+      </div>
+      <div class="quote-side">
+        At Anjni, Geetika Singhal khud har outfit design karti hain — aapki body, budget aur occasion ke hisaab se. Ek dashak se Moradabad ke parivaaron ka bharosa.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="visit-sec" id="visit">
+  <div class="visit-grid reveal">
+    <div class="visit-photo">
+      <img src="https://images.unsplash.com/photo-1761682719767-36b43e4acd63?w=900&q=80" alt="Anjni Designs boutique">
+      <div class="tag">Anjni by Geetika Singhal · Ram Ganga Vihar</div>
+    </div>
+    <div class="visit-copy">
+      <div class="eyebrow">VISIT US</div>
+      <h2>Feel it.<br><em>Make it yours.</em></h2>
+      <p>Your next favourite piece is best experienced in person. Visit Anjni in Ram Ganga Vihar for a personal design consultation.</p>
+      <div class="visit-details">
+        <div class="vd">
+          <h4>LOCATION</h4>
+          <p>High Street, next to Moti Mahal,<br>Ram Ganga Vihar, Moradabad,<br>Uttar Pradesh 244001</p>
+        </div>
+        <div class="vd">
+          <h4>HOURS</h4>
+          <p>Open daily 10 AM – 8 PM<br>Closed Tuesday · 4.9★ (33 reviews)</p>
+        </div>
+        <div class="cta-row">
+          <a class="btn gold" href="https://www.google.com/maps/place/?q=place_id:ChIJi5zxjbT-CjkRH9WMX_e0xoE" target="_blank">Get directions ↗</a>
+          <a class="btn ghost" href="tel:+919897167671">+91 98971 67671</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="map-wrap">
+  <a class="map-open" href="https://www.google.com/maps/place/?q=place_id:ChIJi5zxjbT-CjkRH9WMX_e0xoE" target="_blank">Open in Maps ↗</a>
+  <iframe src="https://maps.google.com/maps?q=Anjni+by+Geetika+Singhal+Ram+Ganga+Vihar+Moradabad&output=embed" loading="lazy"></iframe>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="mono">A</div>
+        <div>
+          <div class="name" style="font-size:14px; letter-spacing:.14em;">ANJNI BY GEETIKA SINGHAL</div>
+          <div class="foot-tagline">Designs that fit your story.</div>
+        </div>
+      </div>
+      <div class="foot-social">
+        <a href="https://wa.me/919897167671" target="_blank">WhatsApp ↗</a>
+        <a href="#">Instagram ↗</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 Anjni by Geetika Singhal · Ram Ganga Vihar, Moradabad</div>
+      <div>Website by Norang Singh Rathore</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.filter').forEach(f => {
+    f.addEventListener('click', () => {
+      document.querySelectorAll('.filter').forEach(x => x.classList.remove('active'));
+      f.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
